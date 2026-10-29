@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Leaf — Make room for reading</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="Leaf home"><span class="brand-mark">◒</span> leaf<span class="brand-dot">.</span></a>
+  <div class="sidebar-intro">A better fit<br>for your Kindle.</div>
+  <button class="nav-item active" id="library-nav"><span>▤</span> Your library <span id="book-count" class="count">0</span></button>
+  <div class="sidebar-bottom"><div class="local-dot"></div><strong>Everything stays here</strong><p>Your PDFs are processed on this computer. No account or cloud upload.</p><div class="device-card"><span class="device-icon">▯</span><div>Kindle Paperwhite<small>11th generation · Send by email</small></div></div></div>
+</aside>
+<main>
+  <header class="topbar"><div id="breadcrumb">YOUR READING SPACE</div><div class="topbar-right"><span class="local-pill">● Local workspace</span><button class="button primary" id="import-button"><span>＋</span> Add PDF</button><input type="file" id="file-input" accept="application/pdf,.pdf" multiple hidden></div></header>
+  <section id="library-view">
+    <div class="hero"><div><span class="eyebrow">FROM PRINTED PAGE TO PAPERWHITE</span><h1>Make room<br>for reading.</h1><p>Turn dense PDFs into books that fit your screen.<br>Keep the words. Lose the pinching and panning.</p></div><div class="hero-art" aria-hidden="true"><div class="paper sheet-back"></div><div class="paper sheet-front"><div class="tiny-title"></div><i></i><i></i><i></i><i class="short"></i><i></i><i></i><i></i><i class="short"></i><div class="paper-label">ROOM TO READ</div></div><span class="orbit-label">PDF → EPUB</span></div></div>
+    <div class="library-heading"><div><h2>Your library <span id="library-count"></span></h2><p>Preview the pages. Check the details. Take a book with you.</p></div><button class="button secondary" id="convert-all">Convert unprocessed books</button></div>
+    <div id="library-grid" class="library-grid"></div>
+    <div class="drop-area" id="drop-area"><span>＋</span><div><strong>A new book waiting?</strong><p>Drop a PDF here, or choose a file from your computer.</p></div><button class="button secondary" id="drop-add">Choose PDF</button></div>
+  </section>
+  <section id="book-view" hidden>
+    <button class="back-link" id="back-library">← Your library</button>
+    <div class="book-heading"><div><span class="eyebrow" id="book-author"></span><h1 id="book-title"></h1><p id="book-meta"></p></div><div class="book-actions"><button class="button secondary" id="settings-button">Conversion settings</button><button class="button primary" id="convert-button">Convert book</button></div></div>
+    <div id="progress-panel" class="progress-panel" hidden><div><span class="spinner"></span><strong id="progress-label">Preparing your book</strong><span id="progress-count"></span></div><progress id="progress-bar" value="0" max="100"></progress><p>You can leave this page open while Leaf works.</p></div>
+    <div id="error-panel" class="error-panel" hidden></div>
+    <div id="result-panel" hidden>
+      <div class="result-summary"><div><span class="result-icon">✓</span><div><strong id="result-title">Your reading copies are ready</strong><p id="result-detail"></p></div></div><div class="download-actions"><a class="button primary" id="epub-download" download>Download EPUB <small id="epub-size"></small></a><a class="button secondary" id="pdf-download" download>Cropped PDF</a><a class="report-link" id="report-download" download>Report ↗</a></div></div>
+      <div class="preview-toolbar"><div class="tabs"><button class="tab active" data-mode="epub">EPUB reading view</button><button class="tab" data-mode="crop">Cropped PDF</button></div><div class="font-tools"><label for="font-size">Aa</label><input type="range" id="font-size" min="16" max="32" value="21" aria-label="Reading font size"><span id="font-size-label">21 px</span></div></div>
+      <div class="preview-layout">
+        <aside class="page-sidebar"><label for="page-search">PDF page</label><div class="page-jump"><input type="number" id="page-search" min="1" value="1"><button id="jump-page" aria-label="Go to page">→</button></div><label class="check-line"><input type="checkbox" id="flags-only"> Show review pages</label><div id="page-list" class="page-list"></div></aside>
+        <div class="comparison">
+          <div class="pane original-pane"><div class="pane-title"><span>ORIGINAL PDF</span><span id="source-page-label"></span></div><div class="original-scroll"><img id="original-image" alt="Original PDF page"></div></div>
+          <div class="pane reader-pane"><div class="pane-title"><span id="reader-title">PAPERWHITE PREVIEW</span><button class="text-button" id="adjust-crop" hidden>Adjust crop</button></div><div class="reader-scroll"><div class="kindle-frame" id="kindle-frame"><article id="reading-content"></article><img id="cropped-image" alt="Cropped PDF page" hidden></div></div><div class="reader-caption">Approximate screen proportions · Actual Kindle rendering may vary</div></div>
+        </div>
+      </div>
+      <div class="review-bar"><div><strong id="page-status">Page review</strong><p id="page-flags"></p></div><div><button class="button secondary" id="mark-reviewed">Mark reviewed</button><button class="button icon" id="previous-page" aria-label="Previous page">←</button><button class="button icon" id="next-page" aria-label="Next page">→</button></div></div>
+      <p class="device-note">Once the preview looks good, email the EPUB to your Kindle address. Test a few passages on your Paperwhite before marking the book finished. Complex tables and figures may still need zooming.</p>
+    </div>
+    <div class="empty-result" id="empty-result"><span>◒</span><h2>A little more breathing room.</h2><p>Convert this book to create a reflowable EPUB and a PDF with smaller margins.<br>You’ll be able to compare both with the original here.</p></div>
+  </section>
+</main>
+<dialog id="settings-dialog"><form id="settings-form"><div class="dialog-title"><h2>Conversion settings</h2><button type="button" class="close-dialog" aria-label="Close">×</button></div><label>Book title<input id="setting-title" required></label><label>Author<input id="setting-author"></label><label>Page layout<select id="setting-spread"><option value="auto">Detect scanned two-page spreads</option><option value="single">One book page per PDF page</option><option value="split">Split every PDF page into left and right</option></select></label><label>Crop safety margin <span id="padding-label">8 pt</span><input id="setting-padding" type="range" min="0" max="24" value="8"></label><label class="check-line"><input id="setting-headers" type="checkbox" checked> Remove repeated running headers and page numbers</label><p class="hint">Settings apply on the next conversion. Previous source files stay untouched.</p><div class="dialog-actions"><button type="button" class="button secondary close-dialog">Cancel</button><button class="button primary" type="submit">Save settings</button></div></form></dialog>
+<dialog id="crop-dialog"><form id="crop-form"><div class="dialog-title"><h2>Adjust this page’s crop</h2><button type="button" class="close-dialog" aria-label="Close">×</button></div><p>Set the retained area as a percentage of this book page. Leave space around footnotes and captions.</p><div class="crop-inputs"><label>Left %<input id="crop-left" type="number" min="0" max="99" step="0.1"></label><label>Top %<input id="crop-top" type="number" min="0" max="99" step="0.1"></label><label>Right %<input id="crop-right" type="number" min="1" max="100" step="0.1"></label><label>Bottom %<input id="crop-bottom" type="number" min="1" max="100" step="0.1"></label></div><div class="crop-preview"><img id="crop-preview-image" alt="Crop adjustment preview"><div id="crop-overlay"></div></div><p class="hint">The highlighted area is retained. Save, then reconvert to update the PDF.</p><div class="dialog-actions"><button type="button" class="button secondary close-dialog">Cancel</button><button class="button primary" type="submit">Save crop</button></div></form></dialog>
+<div id="toast" class="toast" role="status" hidden></div>
+<script src="/app.js"></script>
+</body></html>
